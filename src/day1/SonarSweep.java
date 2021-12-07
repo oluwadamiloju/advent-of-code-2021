@@ -66,38 +66,37 @@ public class SonarSweep {
     }
 
     public static ArrayList<Integer> readRecords() {
-        String line = input.nextLine();
         int values;
         ArrayList<Integer> arrayList = new ArrayList<>(1999);
         try {
-            while (line != null) {
-                values = Integer.parseInt(line);
+            while (input.hasNextInt()) {
+                values = input.nextInt();
+                System.out.println(values);
                 arrayList.add(values);
-                line =input.nextLine();
             }
         }  catch (NoSuchElementException elementException) {
             System.err.println("File improperly formed. Terminating.");
         } catch (IllegalStateException stateException) {
             System.err.println("Error reading from file. Terminating.");
         }
+//        arrayList.forEach(number -> System.out.print(number + " "));
         return arrayList;
     }
 
     public static void main(String[] args) {
         openFile();
         ArrayList<Integer> list = readRecords();
-//        list.ensureCapacity(2000);
 
-        int lessNumbersCounter = 0;
+        int greaterNumbersCounter = 0;
+        int num = list.get(0);
 
-        for(int i = 0; i < list.size(); i ++) {
-            for (int j = i + 1; j < list.size(); j++) {
-                if(list.get(j) < list.get(i)) {
-                    lessNumbersCounter++;
-                }
+        for(int i = 1; i < list.size(); i++) {
+            if(list.get(i) > num){
+                greaterNumbersCounter++;
             }
+            num = list.get(i);
         }
         
-        System.out.println(lessNumbersCounter);
+        System.out.println(greaterNumbersCounter);
     }
 }
